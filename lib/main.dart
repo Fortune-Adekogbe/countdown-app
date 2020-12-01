@@ -33,16 +33,13 @@ class _State extends State<CountdownApp> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text("Countdown App"),
+          title: Text("Count↓ App"),
           centerTitle: true,
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.03,
-              ),
               RichText(
                 text: TextSpan(
                   style: DefaultTextStyle.of(context).style,
@@ -52,13 +49,16 @@ class _State extends State<CountdownApp> {
                         style: TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.bold)),
                     WidgetSpan(
-                      child: Icon(Icons.arrow_downward_outlined, size: 64),
+                      child: Icon(
+                        Icons.arrow_downward,
+                        color: Colors.blue, 
+                        size: 64),
                     )
                   ],
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.03,
+                height: 30,
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.05,
@@ -222,9 +222,11 @@ class CountToTimeState extends State<CountToTimePage> {
                   onPressed: () {
                     final enteredDate = DateTime.parse(_controller.text);
                     if (enteredDate.isAfter(DateTime.now())) {
-                      Duration difference =
-                          DateTime.now().difference(enteredDate);
-                      int diff = difference.inSeconds;
+                      DateTime dt = DateTime.now();
+                      int diff1 = enteredDate.hour * 3600 + enteredDate.minute * 60 + enteredDate.second;
+                      int diff2 = dt.hour * 3600 + dt.minute * 60 + dt.second;
+;
+                      int diff = diff1 - diff2;
                       _goToCountingScreen(context, diff);
                     }
                   },
@@ -276,7 +278,7 @@ class TimerPageState extends State<TimerPage> {
             ],
           ),
         ),
-        title: Text("Countdown App"),
+        title: Text("Count↓ App"),
         centerTitle: true,
       ),
       body: Center(
@@ -317,11 +319,7 @@ class TimerPageState extends State<TimerPage> {
               child: Padding(
                 padding: const EdgeInsets.all(0.0),
                 child: new Text(
-                  _dateTime.hour.toString().padLeft(2, '0') +
-                      ':' +
-                      _dateTime.minute.toString().padLeft(2, '0') +
-                      ':' +
-                      _dateTime.second.toString().padLeft(2, '0'),
+                  "Start Timer",
                   style: TextStyle(
                       color: _State.white,
                       fontSize: 24,
@@ -392,8 +390,9 @@ class CountingPageState extends State<CountingPage>
   AnimationController controller;
 
   String get timerString {
-    Duration duration = Duration(seconds: secs);
-    return '${duration.inHours}:${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+    Duration duration = controller.duration * controller.value;
+    int second = duration.inSeconds;
+    return '${(second ~/ 3600).toString().padLeft(2, '0')}:${((second ~/ 60)%60).toString().padLeft(2, '0')}:${((second % 60)%60).toString().padLeft(2, '0')}';
   }
 
   @override
@@ -401,7 +400,7 @@ class CountingPageState extends State<CountingPage>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: secs),
     );
   }
 
@@ -409,20 +408,27 @@ class CountingPageState extends State<CountingPage>
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.white10,
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 15,
+              ),
+              Icon(Icons.arrow_back),
+            ],
+          ),
+        ),
+        title: Text("Count ↓ App"),
+        centerTitle: true,
+      ),
+      backgroundColor: Colors.white70,
       body: AnimatedBuilder(
           animation: controller,
           builder: (context, child) {
             return Stack(
               children: <Widget>[
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    color: Colors.amber,
-                    height:
-                        controller.value * MediaQuery.of(context).size.height,
-                  ),
-                ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Column(
@@ -452,16 +458,16 @@ class CountingPageState extends State<CountingPage>
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
-                                        "Count Down Timer",
+                                        "The Count ↓",
                                         style: TextStyle(
-                                            fontSize: 20.0,
-                                            color: Colors.white),
+                                            fontSize: 30.0,
+                                            color: Colors.black),
                                       ),
                                       Text(
                                         timerString,
                                         style: TextStyle(
-                                            fontSize: 112.0,
-                                            color: Colors.white),
+                                            fontSize: 80.0,
+                                            color: Colors.black),
                                       ),
                                     ],
                                   ),
@@ -507,7 +513,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Countdown App',
+      title: 'Count ↓ App',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
         iconTheme: IconThemeData(
