@@ -7,11 +7,7 @@ import 'dart:math' as math;
 void main() {
   runApp(MyApp());
 }
-/*
-Add some UI to it.
-Sort out the DateTime subtraction issue for contdown to time.
-Add a final page maybe.
- */
+
 // Home Page
 class CountdownApp extends StatefulWidget {
   @override
@@ -22,7 +18,7 @@ class _State extends State<CountdownApp> {
   bool button1, button2;
   static GlobalKey _globalKey = GlobalKey();
   static const Color white = Color(0xFFFFFFFF);
-  static const Color blue = Color(0xFF7EC8E4);
+  static const Color blue = Color(0xFF62B6AA);
   static const Color dbrown = Color(0xFF393839);  
 
   @override
@@ -68,7 +64,7 @@ class _State extends State<CountdownApp> {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
+                        MaterialStateProperty.all<Color>(blue),
                   ),
                   onPressed: () {
                     _navigateToCountToTimePage(context);
@@ -79,7 +75,7 @@ class _State extends State<CountdownApp> {
                         ? CircularProgressIndicator()
                         : Text(
                             'To a time',
-                            style: TextStyle(color: white, fontSize: 17),
+                            style: TextStyle(color: white, fontSize: 22),
                           ),
                   ),
                 ),
@@ -93,7 +89,7 @@ class _State extends State<CountdownApp> {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
+                        MaterialStateProperty.all<Color>(blue),
                   ),
                   onPressed: () {
                     _navigateToTimerPage(context);
@@ -104,7 +100,7 @@ class _State extends State<CountdownApp> {
                         ? CircularProgressIndicator()
                         : Text(
                             'Timer',
-                            style: TextStyle(color: white, fontSize: 17),
+                            style: TextStyle(color: white, fontSize: 22),
                           ),
                   ),
                 ),
@@ -145,7 +141,7 @@ class CountToTimeState extends State<CountToTimePage> {
   GlobalKey<FormState> _oFormKey = GlobalKey<FormState>();
   TextEditingController _controller;
   static const Color white = Color(0xFFFFFFFF);
-  static const Color blue = Color(0xFF7EC8E4);
+  static const Color blue = Color(0xFF62B6AA);
   static const Color dbrown = Color(0xFF393839); 
 
   //String _initialValue;
@@ -275,7 +271,7 @@ class TimerPageState extends State<TimerPage> {
   }
 
   static const Color white = Color(0xFFFFFFFF);
-  static const Color blue = Color(0xFF7EC8E4);
+  static const Color blue = Color(0xFF62B6AA);
   static const Color dbrown = Color(0xFF393839); 
 
   @override
@@ -304,14 +300,14 @@ class TimerPageState extends State<TimerPage> {
           Container(
             child: new Text(
               "     Hour    Minute   Second",
-              style: TextStyle(color: dbrown, fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(color: dbrown, fontSize: 25, fontWeight: FontWeight.bold),
             ),
           ),
           TimePickerSpinner(
             is24HourMode: true,
             isShowSeconds: true,
             normalTextStyle: TextStyle(fontWeight: FontWeight.w600,fontSize: 24, color: white),
-            highlightedTextStyle: TextStyle(fontWeight: FontWeight.w800, fontSize: 24, color: dbrown),
+            highlightedTextStyle: TextStyle(fontWeight: FontWeight.w800, fontSize: 25, color: dbrown),
             spacing: 50,
             itemHeight: 80, 
             isForce2Digits: true,
@@ -542,7 +538,7 @@ class MyApp extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
-        accentColor: Color(0xFF38b6ff),
+        accentColor: Color(0xFF62B6AA),
       ),
       home: CountdownApp(),
       debugShowCheckedModeBanner: false,
