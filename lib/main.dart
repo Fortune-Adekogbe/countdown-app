@@ -7,7 +7,11 @@ import 'dart:math' as math;
 void main() {
   runApp(MyApp());
 }
-
+/*
+Add some UI to it.
+Sort out the DateTime subtraction issue for contdown to time.
+Add a final page maybe.
+ */
 // Home Page
 class CountdownApp extends StatefulWidget {
   @override
@@ -18,6 +22,8 @@ class _State extends State<CountdownApp> {
   bool button1, button2;
   static GlobalKey _globalKey = GlobalKey();
   static const Color white = Color(0xFFFFFFFF);
+  static const Color blue = Color(0xFF7EC8E4);
+  static const Color dbrown = Color(0xFF393839);  
 
   @override
   void initState() {
@@ -31,29 +37,25 @@ class _State extends State<CountdownApp> {
     return RepaintBoundary(
       key: _globalKey,
       child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text("Count↓ App"),
-          centerTitle: true,
-        ),
+        backgroundColor: dbrown,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               RichText(
                 text: TextSpan(
-                  style: DefaultTextStyle.of(context).style,
+                  //style: DefaultTextStyle.of(context).style,
                   children: [
                     TextSpan(
-                        text: 'Count',
+                        text: 'Count↓',
                         style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold)),
-                    WidgetSpan(
+                            fontSize: 64, color: white, fontWeight: FontWeight.bold)),
+                    /*WidgetSpan(
                       child: Icon(
                         Icons.arrow_downward,
-                        color: Colors.blue, 
-                        size: 64),
-                    )
+                        color: white, 
+                        size: 70),
+                    )*/
                   ],
                 ),
               ),
@@ -142,6 +144,9 @@ class CountToTimePage extends StatefulWidget {
 class CountToTimeState extends State<CountToTimePage> {
   GlobalKey<FormState> _oFormKey = GlobalKey<FormState>();
   TextEditingController _controller;
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color blue = Color(0xFF7EC8E4);
+  static const Color dbrown = Color(0xFF393839); 
 
   //String _initialValue;
   String _valueChanged = '';
@@ -179,9 +184,14 @@ class CountToTimeState extends State<CountToTimePage> {
             ],
           ),
         ),
-        title: Text("Countdown App"),
+        title: Text("Count↓ ",
+        style: TextStyle(color: dbrown, fontWeight: FontWeight.bold),
+        
+        ),
+        backgroundColor: blue,
         centerTitle: true,
       ),
+      backgroundColor: blue,
       body: Center(
         child: SingleChildScrollView(
           padding: EdgeInsets.only(left: 20, right: 20),
@@ -192,8 +202,8 @@ class CountToTimeState extends State<CountToTimePage> {
               children: <Widget>[
                 Container(
                   child: new Text(
-                    "When should the countdown stop?",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    "When should the \n countdown end?",
+                    style: TextStyle(color: dbrown,fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(height: 50),
@@ -225,12 +235,13 @@ class CountToTimeState extends State<CountToTimePage> {
                       DateTime dt = DateTime.now();
                       int diff1 = enteredDate.hour * 3600 + enteredDate.minute * 60 + enteredDate.second;
                       int diff2 = dt.hour * 3600 + dt.minute * 60 + dt.second;
-;
                       int diff = diff1 - diff2;
                       _goToCountingScreen(context, diff);
                     }
                   },
-                  child: Text('Start Timer'),
+                  child: Text('Start Timer',
+        style: TextStyle(color: dbrown, fontWeight: FontWeight.bold, fontSize: 17),
+                  ),
                 ),
               ],
             ),
@@ -263,10 +274,15 @@ class TimerPageState extends State<TimerPage> {
     return _dateTime;
   }
 
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color blue = Color(0xFF7EC8E4);
+  static const Color dbrown = Color(0xFF393839); 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: blue,
         leading: InkWell(
           onTap: () => Navigator.pop(context),
           child: Row(
@@ -278,25 +294,26 @@ class TimerPageState extends State<TimerPage> {
             ],
           ),
         ),
-        title: Text("Count↓ App"),
+        title: Text("Count↓ App", style: TextStyle(color: dbrown),),
         centerTitle: true,
       ),
+      backgroundColor: blue,
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
             Widget>[
           Container(
             child: new Text(
               "     Hour    Minute   Second",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(color: dbrown, fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
           TimePickerSpinner(
             is24HourMode: true,
             isShowSeconds: true,
-            normalTextStyle: TextStyle(fontSize: 24, color: Colors.deepOrange),
-            highlightedTextStyle: TextStyle(fontSize: 24, color: Colors.yellow),
+            normalTextStyle: TextStyle(fontWeight: FontWeight.w600,fontSize: 24, color: white),
+            highlightedTextStyle: TextStyle(fontWeight: FontWeight.w800, fontSize: 24, color: dbrown),
             spacing: 50,
-            itemHeight: 80,
+            itemHeight: 80, 
             isForce2Digits: true,
             onTimeChange: (time) {
               setState(() {
@@ -307,7 +324,7 @@ class TimerPageState extends State<TimerPage> {
           Container(
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                backgroundColor: MaterialStateProperty.all<Color>(white),
               ),
               onPressed: () {
                 DateTime dt = this.enteredDate;
@@ -321,8 +338,8 @@ class TimerPageState extends State<TimerPage> {
                 child: new Text(
                   "Start Timer",
                   style: TextStyle(
-                      color: _State.white,
-                      fontSize: 24,
+                      color: dbrown,
+                      fontSize: 17,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -388,6 +405,9 @@ class CountingPageState extends State<CountingPage>
   CountingPageState({ @required this.secs});
   
   AnimationController controller;
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color blue = Color(0xFF7EC8E4);
+  static const Color dbrown = Color(0xFF393839);
 
   String get timerString {
     Duration duration = controller.duration * controller.value;
@@ -420,10 +440,11 @@ class CountingPageState extends State<CountingPage>
             ],
           ),
         ),
-        title: Text("Count ↓ App"),
+        title: Text("Count↓"),
+        backgroundColor: dbrown,
         centerTitle: true,
       ),
-      backgroundColor: Colors.white70,
+      backgroundColor: dbrown,
       body: AnimatedBuilder(
           animation: controller,
           builder: (context, child) {
@@ -457,17 +478,18 @@ class CountingPageState extends State<CountingPage>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
-                                      Text(
-                                        "The Count ↓",
+                                      Text(                                  
+                                        controller.isAnimating ? "Counting down..." : "Waiting for the signal...",
                                         style: TextStyle(
+                                          fontWeight: FontWeight.bold,
                                             fontSize: 30.0,
-                                            color: Colors.black),
+                                            color: white),
                                       ),
                                       Text(
                                         timerString,
                                         style: TextStyle(
                                             fontSize: 80.0,
-                                            color: Colors.black),
+                                            color: white),
                                       ),
                                     ],
                                   ),
@@ -495,7 +517,8 @@ class CountingPageState extends State<CountingPage>
                                     ? Icons.pause
                                     : Icons.play_arrow),
                                 label: Text(
-                                    controller.isAnimating ? "Pause" : "Play"));
+                                    controller.isAnimating ? "Pause" : "Play",
+                                    style: TextStyle(color: dbrown),));
                           }),
                     ],
                   ),
@@ -519,7 +542,7 @@ class MyApp extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
-        accentColor: Colors.red,
+        accentColor: Color(0xFF38b6ff),
       ),
       home: CountdownApp(),
       debugShowCheckedModeBanner: false,
